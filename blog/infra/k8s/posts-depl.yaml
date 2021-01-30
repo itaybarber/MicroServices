@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: posts-depl
+spec: 
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: posts
+  template: 
+  # The template describes how all different pods should be created by deployment
+    metadata:
+      labels:
+      # The label is an identifier for the pod that should be created
+        app: posts
+    spec:
+      containers: 
+        - name: posts
+          image: itaybarber/posts
+---
+# The --- is to create anotehr object inside the same yaml
+apiVersion: v1
+kind: Service
+metadata: 
+  name: posts-clusterip-srv
+spec:
+  selector:
+    app: posts
+  ports:
+    - name: posts
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

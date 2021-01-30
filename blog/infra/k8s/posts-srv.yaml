@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: posts-srv
+spec:  
+# Says how we want our sevice to be
+  type: NodePort 
+  # Exposes set of pods to the outside world
+  selector:
+  # The selector tells us which pods it should expose. By writing selector we're trying to tell the sevrice
+  # it should find all the different pods with the name "posts" and expose them to the outside world
+    app: posts
+  ports: 
+    - name: posts
+      # name is only for logging porpuses
+      protocol: TCP
+      port: 4000
+      # Means to the port of this NodePort service
+      targetPort: 4000
+      # Means to the port that our app listens to 
+      
