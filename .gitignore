@@ -16,6 +16,9 @@
 /basicsMicroServices\typescript\maps\.cache
 /basicsMicroServices\typescript\maps\dist
 
+dist/
+.cache/
+
 .pnp.js
 
 # testing
