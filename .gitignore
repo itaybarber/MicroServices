@@ -4,6 +4,8 @@
 /*/*/node_modules
 /*/*/.pnp
 /*/cache
+/*/*/cache
+
 
 .pnp.js
 
