@@ -7,6 +7,14 @@
 /*/*/*/.cache
 /*/*/*/dist
 /.cache
+/*/.cache
+/dist
+/*/dist
+/C:\Users\itayb\Source\Repos\itay-barber\Web\React\basicMicroServices\basicsMicroServices\typescript\maps\.cache
+/C:\Users\itayb\Source\Repos\itay-barber\Web\React\basicMicroServices\basicsMicroServices\typescript\maps\dist
+
+/basicsMicroServices\typescript\maps\.cache
+/basicsMicroServices\typescript\maps\dist
 
 .pnp.js
 
