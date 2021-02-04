@@ -9,3 +9,4 @@ console.log(company);
 
 const customMap = new CustomMap('map');
 
+var check;
