@@ -3,6 +3,7 @@
 /*/.pnp
 /*/*/node_modules
 /*/*/.pnp
+/*/cache
 
 .pnp.js
 
