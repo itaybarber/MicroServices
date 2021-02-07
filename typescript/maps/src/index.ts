@@ -9,4 +9,5 @@ console.log(company);
 
 const customMap = new CustomMap('map');
 
-var check;
+var check = customMap.addMarker(new User());
+var check = customMap.addMarker(new Company());
