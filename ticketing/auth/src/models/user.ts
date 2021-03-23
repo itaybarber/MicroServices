@@ -39,7 +39,11 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save', async function(done) {
-    await Password. 
+    if(this.isModified('password')){
+        const hased = await Password.toHash(this.get('password')); 
+        this.set('password', hased);
+    } 
+    done();
 });
 
 userSchema.statics.build = (attrs: UserAttrs) =>  {
