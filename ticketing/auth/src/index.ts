@@ -2,6 +2,7 @@ import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import mongoose from 'mongoose';
+import cookieSession from 'cookie-session';
 
 import { currentUserRouter } from './routes/current-user';
 import { signinRouter } from './routes/signin';
@@ -11,7 +12,14 @@ import { errorHandler} from './middelwares/error-handler';
 import { NotFoundError} from './errors/not-found-error';
 
 const app = express();
+app.set('trust proxy', true);  // Traffic is being proxied to our app through Ingress Nginx. 
+                               // Express is gonna see that stuff is being proxide and by defualit
+                               // express is gonna is not going to trust that https connection 
 app.use(json());
+app.use(cookieSession({
+  signed: false,
+  secure: true // Require to use an HTTPS connection
+}));
 
 app.use(currentUserRouter);
 app.use(signinRouter);
@@ -28,6 +36,9 @@ app.all('*', async (req, res, next) => { throw new NotFoundError()});
 app.use(errorHandler);
 
 const start = async () => {
+  if (!process.env.JWT_KEY) {
+    throw new Error('JWT_KEY must be defined')
+  }
   try {
     await mongoose.connect('mongodb://auth-mongo-srv:27017/auth', {
       useNewUrlParser: true,
