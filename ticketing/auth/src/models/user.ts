@@ -36,7 +36,21 @@ const userSchema = new mongoose.Schema({
         type: String,
         requiered: true
     }
-});
+}, 
+    // We're going to define a set of props to help mongoose to
+    // take our document and turn it to JSON
+    {
+        toJSON: {
+          transform(doc, ret) {
+                ret.id = ret._id;
+                delete ret._id;
+                delete ret.password; // the delete keyword is going to remove a prop from a JS object
+                delete ret.__v;
+                
+            }  
+        }
+    } 
+);
 
 userSchema.pre('save', async function(done) {
      if (this.isModified('password')) {
