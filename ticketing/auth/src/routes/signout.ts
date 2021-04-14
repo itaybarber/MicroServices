@@ -3,7 +3,10 @@ import express from 'express';
 const router = express.Router();
 
 router.post('/api/users/signout', (req, res) => {
-    res.send('Hiiii signout');
+    // To remove all data from cookie we'll use cookie-session package
+    req.session = null;
+
+    res.send({});
 });
 
 export {router as signoutRouter};

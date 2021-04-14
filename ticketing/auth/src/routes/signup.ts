@@ -42,7 +42,7 @@ router.post(
     };
 
     res.status(201).send({id: user.id});
-  }
+  } 
 );
 
 
