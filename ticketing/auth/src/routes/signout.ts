@@ -6,7 +6,7 @@ router.post('/api/users/signout', (req, res) => {
     // To remove all data from cookie we'll use cookie-session package
     req.session = null;
 
-    res.send({});
+    res.send({}); 
 });
 
 export {router as signoutRouter};
