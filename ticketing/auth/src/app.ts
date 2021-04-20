@@ -17,7 +17,7 @@ app.set('trust proxy', true);  // Traffic is being proxied to our app through In
 app.use(json());
 app.use(cookieSession({
   signed: false,
-  secure: true // Require to use an HTTPS connection
+  secure: process.env.NODE_ENV !== 'test' // Require to use an HTTPS connection in case we're not in test environment
 }));
 
 app.use(currentUserRouter);
