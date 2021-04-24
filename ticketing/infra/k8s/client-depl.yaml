@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-depl
+spec:
+  # The spec tells to the deployment how to behave
+  replicas: 1 #Cause I want to run only 1 pod for my NextJS app in this dev env
+  selector:
+    matchLabels:
+      app: client
+  template: # Describes how every pod in this created image by this deployment should behave
+    metadata: #The metadata section here and at the selector, is how the deployment is going to find the set of pods that it's going to manage
+      labels:
+        app: client
+    spec: #To decribe how every pod should behave
+      containers:
+        - name: client
+          image: us.gcr.io/ticketing-dev-305222/client
+# The service is to allow requestes inside the cluster to get access to this pod
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-srv
+spec:
+  selector:
+    app: client
+  ports:
+    - name: client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

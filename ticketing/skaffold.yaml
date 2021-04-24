@@ -7,7 +7,7 @@ deploy:
 build:
   # local:
   #   push: false
-  googleCloudBuild: 
+  googleCloudBuild:
     projectId: ticketing-dev-305222
   artifacts:
     - image: us.gcr.io/ticketing-dev-305222/auth
@@ -17,4 +17,12 @@ build:
       sync:
         manual:
           - src: 'src/**/*.ts'
+            dest: .
+    - image: us.gcr.io/ticketing-dev-305222/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
             dest: .
