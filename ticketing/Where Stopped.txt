@@ -1,3 +1,5 @@
-S11 E10  inc
+S11 E11  inc
 
-To install: npm install axios
+If something doens't work on Home Computer, to try to re-install next
+
+To install: npm install axios.
