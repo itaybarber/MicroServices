@@ -13,8 +13,8 @@ export default () => {
       email, 
       password
     },
-    onSuccess: () => Router.push('/')
-   }); // To navigate the user to main page
+    onSuccess: () => Router.push('/') // To navigate the user to main page
+   }); 
 
   const onSubmit = async (event) => {
     event.preventDefault(); // In order that the form won't sumbit itself to the browser
