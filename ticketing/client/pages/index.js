@@ -36,9 +36,28 @@ const LandingPage = ({ currentUser }) => {
 // כאשר הוא מנסה לרנדר את האפליקציה כשהוא על השרת ופה נמצאת
 // ההזמדנות שלנו ללעשות פאטש' לדאטה מהשרת שהקומפונטה צריכה
 // כשעובדים בקוברנטיס באינגרס אנג'ינקס והבקשה צריכה להשלח לסרוויס אחר
-// היא לא תגיע ונקבל שגיאה וכדי לתקן את זה צריך 
-LandingPage.getInitialProps = async () => {
-  const response = await axios.get('/api/users/currentuser');
-  return response.data;
+// היא לא תגיע ונקבל שגיאה וכדי לתקן את זה צריך לקנפג את אקסיוס שידע מאיפה לשלוח - מהבראוזר או מנקסט.גס
+// ואקסיוס ייגש לאינגרס אנג'ינאקס - הבעיה שהיא שהוא לא יודע מה הכתובת
+// 
+
+LandingPage.getInitialProps = async ({req}) => { // כשהמתודה נקראת, על השרת, הארגומנט הראשון הוא אובייקט שאחד מהפרורטיס שלו זה אובייקט רעק, דרכו נקבל קוקי
+  if (typeof window === 'undefined') { // חלון הוא אובייקט שקיים רק בתוך בראוזר לכן אם לא מוגדר- אנחנו על השרת
+    const response = await axios.get(
+      'http://ingress-nginx.ingress-nginx.sv.cluster.local/api/users/currentuser',
+      // Format is: http://SERVICENAME.NAMESPACE.svc.cluster.local 
+          // To get all namespaces: kubectl get namespace
+          // To get all services inside that namespace: kubectl get services -n namespaceName
+      {
+        headers: req.headers 
+        // {
+        //   Host: 'ticketing.dev' // This is for nginx, to know for which domain we need as specified in the rules of ingress-srv.yaml
+        // }
+    }); 
+    }
+  else { // נהיה במצב הזה, רק כאשר הדף הוא רי-דירקטד מתוך דף אחר באפליקצי. ריפרש או הכנסת היו.ר.ל או ריידרקט מאפליקצי אחרת יביא אותנו לשרת
+    const response = await axios.get('/api/users/currentuser'); 
+  }
+  // זה אובייקט שיש לו פרופרטי של יוזרנוכחי עם ערך נאל אם היוזר לא מחובר או עם אובייקט של יוזר אם כן 
+    return response.data;
 }
 export default LandingPage;
