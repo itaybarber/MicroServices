@@ -20,9 +20,7 @@
   4) מרכיב ה.ט.מ.ל מכל הקומפוננטוות ושולח את הרספונס
 
 */
-import axios from 'axios'; // משתמשים באקסיוס למרות שיש לנו את ההוק כדי שנקסט יוכל לעשות רקווסט אוט' סרוויס
-// בגלל שהוק יכול להיות משומש רק בתוך קומפוננטות ריאקט. ואנחנו בגט איניטיאל פרופס צריכים לעשות את הרקווסט
-
+import buildClient from '../api/build-client';
 
 // לא ניתן לטעון מידע  בתוך הקומפוננטות עצמן משום שהן מרונדרות פע אחת
 // לכן לא ניתן להגיד - תמלא בקשה ואז תמתין לתשובה ולעדכן סטייט או משהו כזה 
@@ -40,24 +38,9 @@ const LandingPage = ({ currentUser }) => {
 // ואקסיוס ייגש לאינגרס אנג'ינאקס - הבעיה שהיא שהוא לא יודע מה הכתובת
 // 
 
-LandingPage.getInitialProps = async ({req}) => { // כשהמתודה נקראת, על השרת, הארגומנט הראשון הוא אובייקט שאחד מהפרורטיס שלו זה אובייקט רעק, דרכו נקבל קוקי
-  if (typeof window === 'undefined') { // חלון הוא אובייקט שקיים רק בתוך בראוזר לכן אם לא מוגדר- אנחנו על השרת
-    const response = await axios.get(
-      'http://ingress-nginx.ingress-nginx.sv.cluster.local/api/users/currentuser',
-      // Format is: http://SERVICENAME.NAMESPACE.svc.cluster.local 
-          // To get all namespaces: kubectl get namespace
-          // To get all services inside that namespace: kubectl get services -n namespaceName
-      {
-        headers: req.headers 
-        // {
-        //   Host: 'ticketing.dev' // This is for nginx, to know for which domain we need as specified in the rules of ingress-srv.yaml
-        // }
-    }); 
-    }
-  else { // נהיה במצב הזה, רק כאשר הדף הוא רי-דירקטד מתוך דף אחר באפליקצי. ריפרש או הכנסת היו.ר.ל או ריידרקט מאפליקצי אחרת יביא אותנו לשרת
-    const response = await axios.get('/api/users/currentuser'); 
-  }
-  // זה אובייקט שיש לו פרופרטי של יוזרנוכחי עם ערך נאל אם היוזר לא מחובר או עם אובייקט של יוזר אם כן 
-    return response.data;
+LandingPage.getInitialProps = async (context) => { // כשהמתודה נקראת, על השרת, הארגומנט הראשון הוא אובייקט שאחד מהפרורטיס שלו זה אובייקט רעק, דרכו נקבל קוקי
+  const client = buildClient(context);
+  const {data} = await client.get('api/users/currentuser');
+  return data;
 }
 export default LandingPage;
