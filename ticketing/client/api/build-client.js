@@ -10,18 +10,17 @@ import axios from 'axios'; // משתמשים באקסיוס למרות שיש ל
 export default ({req}) => {
     if (typeof window === 'undefined') { // חלון הוא אובייקט שקיים רק בתוך בראוזר לכן אם לא מוגדר- אנחנו על השרת
         return axios.create({
-            baseURL: 'http://ingress-nginx.ingress-nginx.sv.cluster.local/api/users/currentuser',
+            baseURL: 'http://ingress-nginx.ingress-nginx.svc.cluster.local',
               // Format is: http://SERVICENAME.NAMESPACE.svc.cluster.local 
               // To get all namespaces: kubectl get namespace
               // To get all services inside that namespace: kubectl get services -n namespaceName
             headers: req.headers 
             //   Host: 'ticketing.dev' // This is for nginx, to know for which domain we need as specified in the rules of ingress-srv.yaml
-
         });
-    }
-    else {
+    } else {
+  // We must be on the browser
         return axios.create({
-            baseURL: '/'// נהיה במצב הזה, רק כאשר הדף הוא רי-דירקטד מתוך דף אחר באפליקצי. ריפרש או הכנסת היו.ר.ל או ריידרקט מאפליקצי אחרת יביא אותנו לשרת
+            baseUrl: '/'// נהיה במצב הזה, רק כאשר הדף הוא רי-דירקטד מתוך דף אחר באפליקצי. ריפרש או הכנסת היו.ר.ל או ריידרקט מאפליקצי אחרת יביא אותנו לשרת
         });
     }
 };

@@ -2,8 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: client-depl
-spec:
-  # The spec tells to the deployment how to behave
+spec: # The spec tells to the deployment how to behave
   replicas: 1 #Cause I want to run only 1 pod for my NextJS app in this dev env
   selector:
     matchLabels:

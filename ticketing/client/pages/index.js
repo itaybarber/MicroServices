@@ -44,7 +44,7 @@ const LandingPage = ({ currentUser }) => {
 
 LandingPage.getInitialProps = async (context) => { // כשהמתודה נקראת, על השרת, הארגומנט הראשון הוא אובייקט שאחד מהפרורטיס שלו זה אובייקט רעק, דרכו נקבל קוקי
   const client = buildClient(context);
-  const {data} = await client.get('api/users/currentuser');
+  const {data} = await client.get('/api/users/currentuser');
   return data;
 }
 export default LandingPage;
