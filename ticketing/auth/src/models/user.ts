@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Password } from "../services/password";
+import { Password } from '../services/password';
 
 // An interface that describes props 
 // that are requiered to create a new user
@@ -25,16 +25,17 @@ interface UserDoc extends mongoose.Document {
     password: string;
 }
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     email: {
         // This type is only for mongoose, not for TS. Therefore it's with a capital S
         // Which is built for JS
         type: String,
-        requiered: true
+        required: true
     },
     password: {
         type: String,
-        requiered: true
+        required: true
     }
 }, 
     // We're going to define a set of props to help mongoose to
@@ -63,7 +64,7 @@ userSchema.pre('save', async function(done) {
 
 userSchema.statics.build = (attrs: UserAttrs) =>  {
     return new User(attrs);
-}
+};
 
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 

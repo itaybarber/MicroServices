@@ -1,9 +1,11 @@
 import express, {Request, Response} from 'express';
 import {body} from 'express-validator';
+import jwt from 'jsonwebtoken';
+import {validateRequest} from '../middelwares/validate-request';
 import { User } from '../models/user'; 
 import {BadRequestError} from '../errors/bad-request-error';
-import {validateRequest} from '../middelwares/validate-request';
-import jwt from 'jsonwebtoken';
+
+
 
 const router = express.Router();
 
@@ -41,13 +43,8 @@ router.post(
       jwt: userJwt
     };
 
-    res.status(201).send({id: user.id});
+    res.status(201).send(user);
   } 
 );
-
-
-router.get('/api/users/signup', (req, res) => {
-  res.send('Hiiii signup');
-});
 
 export {router as signupRouter};

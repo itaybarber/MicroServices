@@ -30,7 +30,7 @@ beforeEach(async () => {
     for (let collection of collections) {
         await collection.deleteMany({});
     }
-})
+});
 
 afterAll(async () => {
     await mongo.stop();
@@ -42,11 +42,12 @@ global.signin = async (email: string, password: string) => {
     const response = await request(app)
     .post('/api/users/signup')
     .send({
-        email, password
+            email, 
+	    password
     })
     .expect(201);
 
     const cookie = response.get('Set-Cookie');
 
     return cookie;
-}
+};

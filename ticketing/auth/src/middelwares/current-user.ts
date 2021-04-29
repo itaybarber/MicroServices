@@ -1,9 +1,9 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken'; // We want to decode our JWT
 
 interface UserPayload {
   id: string;
-  email: string
+  email: string;
 }
 
 declare global {
