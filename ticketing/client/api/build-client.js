@@ -10,7 +10,7 @@ import axios from 'axios'; // משתמשים באקסיוס למרות שיש ל
 export default ({req}) => {
     if (typeof window === 'undefined') { // חלון הוא אובייקט שקיים רק בתוך בראוזר לכן אם לא מוגדר- אנחנו על השרת
         return axios.create({
-            baseURL: 'http://ingress-nginx.ingress-nginx.svc.cluster.local',
+            baseURL: 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
               // Format is: http://SERVICENAME.NAMESPACE.svc.cluster.local 
               // To get all namespaces: kubectl get namespace
               // To get all services inside that namespace: kubectl get services -n namespaceName

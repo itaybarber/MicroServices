@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect } from 'react';
 import Router from 'next/router'; // in order to navigate user around pages
 import useRequest from '../../hooks/use-request';
 
@@ -22,7 +22,7 @@ export default () => {
     await doRequest();
     
     
-  }
+  };
   
   return (
     <form onSubmit={onSubmit}>

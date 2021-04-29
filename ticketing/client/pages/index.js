@@ -26,12 +26,11 @@ import buildClient from '../api/build-client';
 // לכן לא ניתן להגיד - תמלא בקשה ואז תמתין לתשובה ולעדכן סטייט או משהו כזה 
 // אחרי שהאפליקצי כבר בבראווזר הגט איניטיאל פרופס כבר לא רלוונטית
 const LandingPage = ({ currentUser }) => {
-  if (currentUser) {
-    return <h1>You are signed in</h1>;
-  }
-  else {
-    return <h1>You are not signed in</h1>;
-  }
+  return currentUser ? (
+    <h1>You are signed in</h1>
+  ) : (
+    <h1>You are NOT signed in</h1>
+  );
 };
 
 // זו מתודה של נקסט ואם נחליט לממשה (כמו פה) אז נקסט ידע לקרוא לה
@@ -46,5 +45,5 @@ LandingPage.getInitialProps = async (context) => { // כשהמתודה נקרא�
   const client = buildClient(context);
   const {data} = await client.get('/api/users/currentuser');
   return data;
-}
+};
 export default LandingPage;
