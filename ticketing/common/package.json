@@ -1,12 +1,13 @@
 {
-  "name": "@itay_tickets/common",
-  "version": "1.0.4",
+  "name": "@itay_tix/common",
+  "version": "1.0.0",
   "description": "",
-  "main": "./buiid/index.js",
-  "types": "./buiid/index.d.ts",
-  "files": [
-    "./build/**/*"
-  ],
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "del-cli": "^3.0.1",
+    "typescript": "^4.2.4"
+  },
   "scripts": {
     "clean": "rimraf ./build/*",
     "build": "npm run clean && tsc",
@@ -14,10 +15,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {},
-  "devDependencies": {
-    "del-cli": "^3.0.1",
-    "typescript": "^4.2.4"
-  }
+  "license": "ISC"
 }
