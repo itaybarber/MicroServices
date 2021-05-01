@@ -8,12 +8,14 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import buildClient from '../api/build-client';
 
+import Header from '../components/header';
+
 // The Component prop is the page we want to show so we can also wrap it
 // With other JSX    
-const AppComponent = ({ Component, pageProps }) => {
+const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
     <div>
-      <h1>Header</h1>
+      <Header currentUser={currentUser}/> 
       <Component {...pageProps} />  
   </div>
   );
@@ -38,7 +40,9 @@ AppComponent.getInitialProps = async (appContext) => {
     pageProps = await appContext.Component.getInitialProps(appContext.ctx);
   }
 
-  return data;
+  return { 
+    pageProps,
+    currentUser: data.currentUser};  // We can also write: ...data cause the data is gonna have a currentUser property
 }
 
 export default AppComponent; 
