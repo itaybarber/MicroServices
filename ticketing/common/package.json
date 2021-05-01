@@ -1,15 +1,16 @@
 {
   "name": "@itay_tickets/common",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "",
   "main": "./buiid/index.js",
   "types": "./buiid/index.d.ts",
   "files": [
-    "build/**/*"
+    "./build/**/*"
   ],
   "scripts": {
     "clean": "rimraf ./build/*",
-    "build": "npm run clean && tsc"
+    "build": "npm run clean && tsc",
+    "pub": "git add . && git commit -m \"Updates\" && git push  && npm version patch && npm run build && npm publish"
   },
   "keywords": [],
   "author": "",
