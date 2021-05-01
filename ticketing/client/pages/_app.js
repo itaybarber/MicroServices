@@ -33,7 +33,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 // Custom component => receives context === {Component, ctx: {req, res}}
 AppComponent.getInitialProps = async (appContext) => {
   const client = buildClient(appContext.ctx);
-  const {data} = await client.get('api/users/currentuser');
+  const {data} = await client.get('/api/users/currentuser');
 
   let pageProps = {};
   if (appContext.Component.getInitialProps) {  // For pages that don't define getInitalProps
@@ -42,7 +42,7 @@ AppComponent.getInitialProps = async (appContext) => {
 
   return { 
     pageProps,
-    currentUser: data.currentUser};  // We can also write: ...data cause the data is gonna have a currentUser property
+    ...data};  // We can also write: ...data cause the data is gonna have a currentUser property
 }
 
 export default AppComponent; 

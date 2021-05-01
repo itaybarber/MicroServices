@@ -20,8 +20,6 @@ export default () => {
     event.preventDefault(); // In order that the form won't sumbit itself to the browser
     
     await doRequest();
-    
-    
   };
   
   return (
