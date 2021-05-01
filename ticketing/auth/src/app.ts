@@ -7,8 +7,8 @@ import { currentUserRouter } from './routes/current-user';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
-import { errorHandler} from './middelwares/error-handler';
-import { NotFoundError} from './errors/not-found-error';
+import { NotFoundError} from '@itay_tix/common/build/index';
+import { errorHandler} from '@itay_tix/common/build/index';
 
 const app = express();
 app.set('trust proxy', true);  // Traffic is being proxied to our app through Ingress Nginx. 

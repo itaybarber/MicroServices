@@ -3,9 +3,8 @@ import {body} from 'express-validator';
 import jwt from 'jsonwebtoken';
 import { Password} from '../services/password';
 import {User} from '../models/user';
-import {validateRequest} from '../middelwares/validate-request';
-import { BadRequestError } from '../errors/bad-request-error';
-
+import {validateRequest, BadRequestError} from '@itay_tix/common/build/index';
+  
 const router = express.Router();
 
 router.post(

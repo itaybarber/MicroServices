@@ -1,5 +1,6 @@
-S12 E5   inc
+S12 E8   inc
 
 If something doens't work on Home Computer, to try to re-install next
 
-To install: npm install axios.
+npm install del-cli typescript --save-dev
+To install: npm install express express-validator cookie-session jsonwebtoken @types/cookie-session @types/express @types/jsonwebtoken

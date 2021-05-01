@@ -1,5 +1,5 @@
 import express from 'express';
-import { currentUser } from '../middelwares/current-user';
+import { currentUser } from '@itay_tix/common/build/index';
 
 const router = express.Router();
 
@@ -8,4 +8,4 @@ res.send({ currentUser: req.currentUser || null });
 });
 
 
-export {router as currentUserRouter};
+export {router as currentUserRouter}; 
