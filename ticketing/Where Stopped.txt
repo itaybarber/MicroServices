@@ -1,6 +1,10 @@
-S12 E9   inc
+S13 E7   inc
+
+in index.ts to see the name of service -- if same as in google cloud
+
 
 If something doens't work on Home Computer, to try to re-install next
 
 npm install del-cli typescript --save-dev
 To install: npm install express express-validator cookie-session jsonwebtoken @types/cookie-session @types/express @types/jsonwebtoken
+
