@@ -12,7 +12,23 @@ it('has a route handler listening to /api/tickets from post requests',
 
 it('can only be accessed if the user is signed in',
   async () => {
-    
+    const response = await request(app)
+    .post('/api/tickets')
+    .send({})
+    .expect(401);
+
+  }
+);
+
+it('Returns a status other than 401 if user is signed in',
+  async () => {
+    const response = await request(app)
+    .post('/api/tickets')
+    .send({});
+
+
+    expect(response.status).not.toEqual(401);
+
   }
 );
 
