@@ -62,6 +62,7 @@ userSchema.pre('save', async function(done) {
     
 });
 
+// The goal of build is to allow type script to do validation or type checking to create a new record
 userSchema.statics.build = (attrs: UserAttrs) =>  {
     return new User(attrs);
 };
