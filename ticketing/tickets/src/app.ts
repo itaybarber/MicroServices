@@ -4,6 +4,8 @@ import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import { NotFoundError, errorHandler, currentUser} from '@itay_tix/common/build/index';
 import {createTicketRouter} from './routes/new';
+import {showTicketRouter} from './routes/show';
+
 
 const app = express();
 app.set('trust proxy', true);  // Traffic is being proxied to our app through Ingress Nginx. 
@@ -20,6 +22,7 @@ app.use(
 app.use(currentUser);
 
 app.use(createTicketRouter);
+app.use(showTicketRouter);
 
 // When we throw the error, express is going to catch the error,
 // and sent it of to our middleware. 
