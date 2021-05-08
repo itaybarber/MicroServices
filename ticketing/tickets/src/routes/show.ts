@@ -8,10 +8,10 @@ router.get('/api/tickets/:id', async (req: Request, res: Response) => {
   const ticket = await Ticket.findById(req.params.id);
 
   if (!ticket) {
-    return new NotFoundError;
+    throw new NotFoundError();
   }
 
-  return res.send(ticket); // The defualt is 200
+  res.send(ticket); // The defualt is 200
 });
 
 export {router as showTicketRouter};

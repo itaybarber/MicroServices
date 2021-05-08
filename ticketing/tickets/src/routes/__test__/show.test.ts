@@ -1,13 +1,14 @@
-import { response } from 'express';
 import request from 'supertest';
 import {app} from '../../app';
+import mongoose from 'mongoose';
 
 it('Return a 404 if a ticket is not found', async () => {
-  const response = await request(app)
-  .get('/api/tickets/dsfdsfdsfdsfsdfdsfdsfds')
-  .send()
-
-  console.log(response.body);
+  const id = new mongoose.Types.ObjectId().toHexString();
+  
+     await request(app).
+     get(`/api/tickets/${id}`).
+     send().
+     expect(404);
 });
 
 it('Return a ticket if a ticket is found', async () => {
@@ -21,10 +22,6 @@ it('Return a ticket if a ticket is found', async () => {
     title, price
   })
   .expect(201);
-  
-  console.log(response.body.id);
-  console.log(response.body.title);
-
   const ticketResponse = await request(app)
   .get(`/api/tickets/${response.body.id}`)
   .send()
