@@ -7,7 +7,8 @@ import {Ticket} from '../models/ticket';
 const router = express.Router();
 router.post(
     '/api/tickets',
-    requireAuth, [
+    requireAuth,
+    [
       body('title').not().isEmpty().withMessage('Title is requiered'), // Doing this validation check here doesn't cause errors to be thrown or to a res to be sent back etc. 
       // But it will set an error on the incoming request. So we should inspect that req and responde to it if requiered
       body('price').isFloat({gt: 0}).withMessage('Price must be greater than 0'), 
