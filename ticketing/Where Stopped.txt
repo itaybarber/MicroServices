@@ -1,4 +1,6 @@
-S14 E3   inc
+S14 E6   inc
+
+>npm install node-nats-streaming ts-node-dev typescript @types/node
 
 in index.ts to see the name of service -- if same as in google cloud
 
