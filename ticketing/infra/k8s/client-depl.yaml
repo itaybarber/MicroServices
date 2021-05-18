@@ -14,7 +14,7 @@ spec: # The spec tells to the deployment how to behave
     spec: #To decribe how every pod should behave
       containers:
         - name: client
-          image: us.gcr.io/ticketing-dev-305222/client
+          image: us.gcr.io/ticketing-dev-314011/client
 # The service is to allow requestes inside the cluster to get access to this pod
 ---
 apiVersion: v1
