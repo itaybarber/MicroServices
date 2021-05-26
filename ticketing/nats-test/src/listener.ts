@@ -16,14 +16,17 @@ stan.on('connect', () => {
     process.exit();
   })
 
-  const options = stan.subscriptionOptions()
-    .setManualAckMode(true);
+  const options = stan
+    .subscriptionOptions()
+    .setManualAckMode(true)
+    .setDeliverAllAvailable()
+    .setDurableName('orders-service');
 
   const subscription = stan.subscribe(
     // name of channel:
     'ticket:created', 
     // Queue groud name: (in case we have several instances of the listener and we don't want it to repeat the same)
-    'orders-service-queue-group',
+    'orders-service-queue-group', // The queue group is also important that we won't lose events from past if listener is down from the setDurableName
     options);
 
   subscription.on('message', (msg: Message) => {
