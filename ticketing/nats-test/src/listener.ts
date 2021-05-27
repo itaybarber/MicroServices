@@ -1,5 +1,6 @@
-import nats, {Message} from 'node-nats-streaming';
+import nats from 'node-nats-streaming';
 import { randomBytes} from 'crypto';
+import {TicketCreatedListener} from './events/ticket-created-listener';
 
 console.clear();
 
@@ -14,31 +15,11 @@ stan.on('connect', () => {
   stan.on('close', () => {
     console.log('NATS connection failed');
     process.exit();
-  })
-
-  const options = stan
-    .subscriptionOptions()
-    .setManualAckMode(true)
-    .setDeliverAllAvailable()
-    .setDurableName('orders-service');
-
-  const subscription = stan.subscribe(
-    // name of channel:
-    'ticket:created', 
-    // Queue groud name: (in case we have several instances of the listener and we don't want it to repeat the same)
-    'orders-service-queue-group', // The queue group is also important that we won't lose events from past if listener is down from the setDurableName
-    options);
-
-  subscription.on('message', (msg: Message) => {
-    const data = msg.getData();
-
-    if (typeof data === 'string') {
-      console.log(`Received event #${msg.getSequence()}, with data: ${(data)}`);
-    }
-
-    msg.ack();
   });
+
+  new TicketCreatedListener(stan).listen();
 });
 
 process.on('SIGINT', () => stan.close());
-process.on('SIGTERM', () => stan.close())
+process.on('SIGTERM', () => stan.close());
+
