@@ -7,6 +7,9 @@ import {
   NotAuthorizedError
 } from '@itay_tix/common/build/index';
 import { Ticket } from '../models/ticket';
+import { TicketUpdatedPublisher} from '../events/publishers/ticket-updated-publisher';
+import {natsWrapper} from '../nats-wrapper';
+
 
 const router = express.Router();
 router.put(
@@ -38,6 +41,11 @@ router.put(
     // pre-save hooks or something that is done by mongoDB iteself or anything else, will be persisted
     // back to this ticket document, so we don't need to re-fetch that ticket doc
 
+    new TicketUpdatedPublisher(natsWrapper.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId }); 
     res.send(ticket);
 });
 
