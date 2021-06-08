@@ -1,6 +1,7 @@
 import request from 'supertest';
 import {app} from '../../app';
 import {Ticket} from '../../models/ticket';
+import { natsWrapper } from '../../nats-wrapper'; // We're importing the real but jest is going to give us the mock instead
 
 it('has a route handler listening to /api/tickets from post requests',
   async () => {
@@ -97,5 +98,18 @@ it('it creates a ticket with valid inputs',
     expect(tickets[0].title).toEqual(title);
 });
 
+it('publishes an event', async () => {
+  const title = 'sdfdsf';
 
+  const response3 = await request(app)
+  .post('/api/tickets')
+  .set('Cookie', global.signin())
+  .send({
+    title,
+    price: 100
+    });
+  expect(response3.status).toEqual(201);
+
+  console.log(natsWrapper);
+})
   
