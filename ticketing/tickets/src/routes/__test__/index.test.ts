@@ -11,7 +11,7 @@ const createTicket = () =>{
   });
 }
 
-it('can fectch a list of tickets', async () => {
+it('can fetch a list of tickets', async () => {
   await createTicket(); // Because we get a promise from this, we do want to await it
   await createTicket();
   await createTicket();
@@ -22,4 +22,4 @@ it('can fectch a list of tickets', async () => {
   .expect(200);
 
   expect(res.body.length).toEqual(3);
-})
+});

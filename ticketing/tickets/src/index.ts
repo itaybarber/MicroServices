@@ -19,7 +19,7 @@ const start = async () => {
       );
 
       natsWrapper.client.on('close', () => {
-        console.log('NATS connection failed');
+        console.log('NATS connection closed!');
         process.exit();
       });
       process.on('SIGINT', () => natsWrapper.client.close());
@@ -28,7 +28,7 @@ const start = async () => {
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true
+      useCreateIndex: true,
       });
       console.log('Connected to MongoDB');
     } catch (err) {
