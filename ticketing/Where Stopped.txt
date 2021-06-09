@@ -1,4 +1,4 @@
-S16 E17   inc
+S17 E6  inc
 
 >npm install node-nats-streaming ts-node-dev typescript @types/node
 
