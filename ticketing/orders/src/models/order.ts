@@ -1,6 +1,8 @@
 import mongoose, { Mongoose } from 'mongoose';
-import {OrderStatus} from '@itay_tix/common/build/events/types/order-status';
+import {OrderStatus} from '@itay_tix/common/build/index';
 import {TicketDoc} from './ticket';
+
+export {OrderStatus};
 
 interface OrderAttrs {
   userId: string;

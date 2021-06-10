@@ -4,8 +4,6 @@ import jwt from 'jsonwebtoken';
 import { User } from '../models/user'; 
 import {validateRequest, BadRequestError} from '@itay_tix/common/build/index';
 
-
-
 const router = express.Router();
 
 router.post(

@@ -1,4 +1,4 @@
-import { NotFoundError } from '@itay_tix/common/build';
+import { NotFoundError } from '@itay_tix/common/build/index';
 import express, {Request, Response} from 'express';
 import {Ticket} from '../models/ticket';
 
