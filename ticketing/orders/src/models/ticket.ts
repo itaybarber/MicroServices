@@ -2,13 +2,13 @@ import mongoose from 'mongoose';
 import { Order, OrderStatus } from './order';
 
 interface TicketAttrs {
-  title: string,
-  price: number
+  title: string;
+  price: number;
 }
 
 export interface TicketDoc extends mongoose.Document {
-  title: string,
-  price: number
+  title: string;
+  price: number;
 
   isReserved(): Promise<boolean>; // The Promise resolves with a bool
 }
@@ -58,12 +58,12 @@ const existingOrder = await Order.findOne({
         OrderStatus.AWaitingPayment,
         OrderStatus.Complete,
         
-      ]
-    }
+      ],
+    },
   });
 
   return !!existingOrder; // If it will be null, it will flip it to true, then to false;
-}
+};
 
 // The ticket model is the object that get us access to the overall collection
 const Ticket = mongoose.model<TicketDoc,TicketModel>('Ticket', ticketSchema);

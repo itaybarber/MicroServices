@@ -1,4 +1,4 @@
-import mongoose, { Mongoose } from 'mongoose';
+import mongoose from 'mongoose';
 import {OrderStatus} from '@itay_tix/common/build/index';
 import {TicketDoc} from './ticket';
 
@@ -19,17 +19,17 @@ interface OrderDoc extends mongoose.Document {
 }
 
 interface OrderModel extends mongoose.Model<OrderDoc> {
-  build(atter: OrderAttrs) : OrderDoc;
+  build(attrs: OrderAttrs) : OrderDoc;
 }
 
 const orderSchema = new mongoose.Schema({
   userId: {
     type: String,
-    require: true,
+    required: true,
   },
   status: {
     type: String,
-    require: true,
+    required: true,
     enum: Object.values(OrderStatus),
     default: OrderStatus.Created,
   },
