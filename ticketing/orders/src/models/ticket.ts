@@ -47,7 +47,10 @@ ticketSchema.statics.build = (attrs: TicketAttrs) => {
 ticketSchema.methods.isReserved = async function () {
   // this === the ticketDoc that we just called 'isReserved' on
   // That's why we need to use the keyword function, not to mess up with "this"
-  const existingOrder = await Order.findOne({
+
+  // Run query to look at all orderes and to find an order where the ticket
+  // is the ticket we found above & the order stat is not cancelled
+const existingOrder = await Order.findOne({
     ticket: this,
     status: {
       $in: [

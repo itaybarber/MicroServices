@@ -25,11 +25,9 @@ async (req:Request, res: Response) => {
   }
 
   // Make sure ticket is not reserved already
-  // Run query to look at all orderes and to find an order where the ticket
-  // is the ticket we found above & the order stat is not cancelled
-  const isReserved = await ticket.isReserved();
+    const isReserved = await ticket.isReserved();
   
-  if (existingOrder) {
+  if (isReserved) {
     throw new BadRequestError('Ticket is already reserved');
   }
   
