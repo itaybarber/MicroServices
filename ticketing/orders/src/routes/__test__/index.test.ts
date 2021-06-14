@@ -54,7 +54,7 @@ it('fetches orders for a paricular user', async () => {
   expect(res.body[0].id).toEqual(orderOne.id);
   expect(res.body[1].id).toEqual(orderTwo.id);
   expect(res.body[0].ticket.id).toEqual(ticket2.id);
-  expect(res.body[1].ticket.id).toEqual(ticket2.id);
+  expect(res.body[1].ticket.id).toEqual(ticket3.id);
 
 });
 
