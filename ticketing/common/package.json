@@ -2,7 +2,7 @@
   "name": "@itay_tix/common",
   "version": "1.0.10",
   "description": "",
-  "main": "index.js",
+  "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "files": [
     "build/**/*"
