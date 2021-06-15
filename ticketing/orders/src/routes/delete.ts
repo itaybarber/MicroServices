@@ -1,13 +1,15 @@
 import express, {Request, Response} from 'express';
 import { Order, OrderStatus} from '../models/order';
 import { validateRequest, requireAuth, NotFoundError, NotAuthorizedError } from '@itay_tix/common/build/index';
+import { OrderCancelledPublisher } from '../events/publishers/order-created-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
 router.delete('/api/orders/:orderId', requireAuth ,async (req:Request, res: Response) => {
   const {orderId} = req.params;
 
-  const order = await Order.findById(orderId);
+  const order = await Order.findById(orderId).populate('ticket');
   if (!order) {
     throw new NotFoundError();
   }
@@ -17,6 +19,8 @@ router.delete('/api/orders/:orderId', requireAuth ,async (req:Request, res: Resp
 
   order.status = OrderStatus.Cancelled;
   await order.save();
+
+  new OrderCancelledPublisher(natsWrapper.client).publish({id: order.id, ticket: {id: order.ticket.id}});
 
   res.status(204).send(order);
 });

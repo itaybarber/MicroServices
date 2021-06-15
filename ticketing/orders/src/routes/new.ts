@@ -4,6 +4,8 @@ import {BadRequestError, NotFoundError, OrderStatus, requireAuth, validateReques
 import {body} from 'express-validator';
 import {Ticket} from '../models/ticket';
 import {Order} from '../models/order';
+import { OrderCreatedPublisher } from '../events/publishers/order-cancelled-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -46,7 +48,9 @@ async (req:Request, res: Response) => {
   });
 
   await order.save();
-  // Pulish an event saying order was created
+
+  // Publish an event saying order was created
+  new OrderCreatedPublisher(natsWrapper.client).publish({id: order.id, status: order.status, userId: order.userId, expiresAt: order.expiresAt.toISOString(), ticket: {id: ticket.id, price: ticket.price} });
 
   res.status(201).send(order);
 });
