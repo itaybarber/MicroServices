@@ -1,6 +1,5 @@
-import { Subjects, Publisher, OrderCancelledEvent } from "@itay_tix/common";
+import { Subjects, Publisher, OrderCreatedEvent } from "@itay_tix/common";
 
-export class OrderCancelledPublisher extends Publisher<OrderCancelledEvent> {
-  subject: Subjects.OrderCancelled = Subjects.OrderCancelled;
-
+export class OrderCreatedPublisher extends Publisher<OrderCreatedEvent> {
+  subject: Subjects.OrderCreated = Subjects.OrderCreated;
 }
