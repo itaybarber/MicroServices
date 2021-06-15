@@ -1,7 +1,7 @@
 import express, {Request, Response} from 'express';
 import { Order, OrderStatus} from '../models/order';
 import { validateRequest, requireAuth, NotFoundError, NotAuthorizedError } from '@itay_tix/common/build/index';
-import { OrderCancelledPublisher } from '../events/publishers/order-created-publisher';
+import { OrderCancelledPublisher } from '../events/publishers/order-cancelled-publisher';
 import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
