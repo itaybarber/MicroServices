@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import {updateIfCurrentPlugin} from 'mongoose-update-if-current';
 
 interface TicketAttrs {
   title: string;
@@ -6,11 +7,14 @@ interface TicketAttrs {
   userId: string;
 }
 
-// We need the TicketDoc interface if we would like to add some additional properties in the future
+// The goal of the TicketDoc interface is, is to list out all the props a doc has / an instance of a ticket has 
+//We need the TicketDoc interface if we would like to add some additional properties in the future
 interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
   userId: string;
+  version: number; 
+
 }
 
 interface TicketModel extends mongoose.Model<TicketDoc> {
@@ -37,6 +41,9 @@ const ticketSchenma = new mongoose.Schema({
       }
     }
   });
+  ticketSchenma.set('versionKey', 'version');
+
+  ticketSchenma.plugin(updateIfCurrentPlugin);
 
   ticketSchenma.statics.build = (attrs: TicketAttrs) => {
     return new Ticket(attrs);
