@@ -22,7 +22,8 @@ interface OrderModel extends mongoose.Model<OrderDoc> {
   build(attrs: OrderAttrs) : OrderDoc;
 }
 
-const orderSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema(
+  {
   userId: {
     type: String,
     required: true,
@@ -47,9 +48,10 @@ const orderSchema = new mongoose.Schema({
       transform(doc, ret) {
         ret.id = ret._id;
         delete ret._id;
-      }
-    }
-  });
+      },
+    },
+  }
+);
 
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs); 

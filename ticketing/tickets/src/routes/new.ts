@@ -13,7 +13,9 @@ router.post(
     [
       body('title').not().isEmpty().withMessage('Title is requiered'), // Doing this validation check here doesn't cause errors to be thrown or to a res to be sent back etc. 
       // But it will set an error on the incoming request. So we should inspect that req and responde to it if requiered
-      body('price').isFloat({gt: 0}).withMessage('Price must be greater than 0'), 
+      body('price')
+      .isFloat({ gt: 0 })
+      .withMessage('Price must be greater than 0'),
     ], 
   validateRequest ,
   async (req:Request, res: Response) => {
@@ -22,7 +24,7 @@ router.post(
     const ticket = Ticket.build({
       title,
       price,
-      userId: req.currentUser!.id
+      userId: req.currentUser!.id,
     });
 
     await ticket.save();
@@ -30,11 +32,13 @@ router.post(
       id: ticket.id,
       title: ticket.title,
       price: ticket.price,
-      userId: ticket.userId
+      userId: ticket.userId,
+      version: ticket.version,
     });
 
 
     res.status(201).send(ticket);
-});
+  }
+);
 
-export {router as createTicketRouter} ;
+export { router as createTicketRouter } ;

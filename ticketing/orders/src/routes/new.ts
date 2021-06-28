@@ -15,10 +15,13 @@ router.post(
   '/api/orders', 
   requireAuth, 
   [
-    body('ticketId').not().isEmpty().custom((input: string) => mongoose.isValidObjectId(input)).withMessage("Ticket id must be provided")
+     body('ticketId')
+     .not()
+     .isEmpty()
+     .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
+     .withMessage('Ticket id must be provided'),
   ],
-  validateRequest
-  ,
+  validateRequest,
 async (req:Request, res: Response) => {
   const {ticketId} = req.body;
   // Find the ticket the user is trying to order in DB
@@ -35,7 +38,7 @@ async (req:Request, res: Response) => {
     throw new BadRequestError('Ticket is already reserved');
   }
   
-  // Calc an expiration date for order
+  // Calculate an expiration date for order
   const expirationDate = new Date();
   expirationDate.setSeconds(expirationDate.getSeconds() + EXPIRATION_WINDOW_SECONDS);
 
@@ -44,15 +47,24 @@ async (req:Request, res: Response) => {
     userId: req.currentUser!.id,
     status: OrderStatus.Created,
     expiresAt : expirationDate,
-    ticket : ticket
+    ticket, 
   });
 
   await order.save();
 
   // Publish an event saying order was created
-  new OrderCreatedPublisher(natsWrapper.client).publish({id: order.id, status: order.status, userId: order.userId, expiresAt: order.expiresAt.toISOString(), ticket: {id: ticket.id, price: ticket.price} });
-
+  new OrderCreatedPublisher(natsWrapper.client).publish({
+    id: order.id,
+    status: order.status,
+    userId: order.userId,
+    expiresAt: order.expiresAt.toISOString(),
+    ticket: {
+      id: ticket.id,
+      price: ticket.price,
+    },
+  });
   res.status(201).send(order);
-});
+  }
+  );
 
 export {router as newOrderRouter};

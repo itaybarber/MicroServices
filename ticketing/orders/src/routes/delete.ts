@@ -13,16 +13,23 @@ router.delete('/api/orders/:orderId', requireAuth ,async (req:Request, res: Resp
   if (!order) {
     throw new NotFoundError();
   }
-  if (order.userId != req.currentUser?.id) {
+  if (order.userId !== req.currentUser!.id) {
     throw new NotAuthorizedError();
   }
 
   order.status = OrderStatus.Cancelled;
   await order.save();
 
-  new OrderCancelledPublisher(natsWrapper.client).publish({id: order.id, ticket: {id: order.ticket.id}});
+    // publishing an event saying this was cancelled!
+  new OrderCancelledPublisher(natsWrapper.client).publish({
+  id: order.id, 
+  ticket: {
+    id: order.ticket.id,
+    },
+    });
 
   res.status(204).send(order);
-});
+  }
+);
 
 export {router as deleteOrderRouter};

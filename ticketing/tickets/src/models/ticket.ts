@@ -22,33 +22,38 @@ interface TicketModel extends mongoose.Model<TicketDoc> {
 }
 
 // The 1st arg is an obj and we're going to list all the different props we want it to have
-const ticketSchenma = new mongoose.Schema({
+const ticketSchema = new mongoose.Schema(
+{
   title: {
     type: String,
-    required: true},
+    required: true,
+    },
   price: {
     type: Number,
-    required: true},
+    required: true,
+    },
   userId: {
     type: String,
-    required: true
-  }},
+    required: true,
+  },
+  },
    {
     toJSON: {
       transform(doc, ret) { // ret is the object that's going to be the json
         ret.id = ret._id;
         delete ret._id;
-      }
-    }
-  });
-  ticketSchenma.set('versionKey', 'version');
+      },
+    },
+  }
+);
+  ticketSchema.set('versionKey', 'version');
 
-  ticketSchenma.plugin(updateIfCurrentPlugin);
+  ticketSchema.plugin(updateIfCurrentPlugin);
 
-  ticketSchenma.statics.build = (attrs: TicketAttrs) => {
+  ticketSchema.statics.build = (attrs: TicketAttrs) => {
     return new Ticket(attrs);
   };
 
-  const Ticket = mongoose.model<TicketDoc, TicketModel>('Ticket', ticketSchenma);
+  const Ticket = mongoose.model<TicketDoc, TicketModel>('Ticket', ticketSchema);
 
   export {Ticket};

@@ -4,7 +4,7 @@ import {
   validateRequest,
   NotFoundError,
   requireAuth,
-  NotAuthorizedError
+  NotAuthorizedError,
 } from '@itay_tix/common/build/index';
 import { Ticket } from '../models/ticket';
 import { TicketUpdatedPublisher} from '../events/publishers/ticket-updated-publisher';
@@ -17,7 +17,9 @@ router.put(
   requireAuth,
   [
     body('title').not().isEmpty().withMessage('Title is requiered'),
-    body('price').isFloat({gt: 0}).withMessage('Price must be greater than 0'),
+        body('price')
+	.isFloat({gt: 0 })
+	.withMessage('Price must be greater than 0'),
   ], 
   validateRequest, 
   async (req: Request, res: Response) => {
@@ -33,7 +35,7 @@ router.put(
 
     ticket.set({
       title: req.body.title,
-      price: req.body.price
+      price: req.body.price,
     }); // Updates the document in memory, not the mongoDB data base
 
     await ticket.save(); // After save, those updates will be persisted to the DB
@@ -45,8 +47,11 @@ router.put(
       id: ticket.id,
       title: ticket.title,
       price: ticket.price,
-      userId: ticket.userId }); 
+      userId: ticket.userId,
+      version: ticket.version,
+     }); 
     res.send(ticket);
-});
+  }
+);
 
 export {router as updateTicketRouter};

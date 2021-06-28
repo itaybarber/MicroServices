@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { Order, OrderStatus } from './order';
 
 interface TicketAttrs {
@@ -10,7 +11,7 @@ interface TicketAttrs {
 export interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
-
+  version: number;
   isReserved(): Promise<boolean>; // The Promise resolves with a bool
 }
 
@@ -20,7 +21,7 @@ interface TicketModel extends mongoose.Model<TicketDoc> {
 
 const ticketSchema = new mongoose.Schema({
   title: {
-    type: String,
+    type: String, 
     required: true,
   },
 
@@ -38,6 +39,9 @@ const ticketSchema = new mongoose.Schema({
   }
 }
 });
+
+ticketSchema.set('versionKey', 'version'); // For doing the versioning stuff;
+ticketSchema.plugin(updateIfCurrentPlugin);
 
 
 // The statics object is how we add new method directly to the ticket model

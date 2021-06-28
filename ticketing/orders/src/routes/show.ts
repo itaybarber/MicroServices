@@ -1,11 +1,14 @@
 import express, {Request, Response} from 'express';
 import {NotAuthorizedError, NotFoundError, requireAuth} from '@itay_tix/common/build/index';
 import {Order} from '../models/order';
-import {Ticket} from '../models/ticket';
+
 
 const router = express.Router();
 
-router.get('/api/orders/:orderId', requireAuth,async (req:Request, res: Response) => {
+router.get(
+  '/api/orders/:orderId', 
+  requireAuth,
+  async (req:Request, res: Response) => {
   const order = await Order.findById(req.params.orderId).populate('ticket'); //The populate is to find the order and simultaniously to find the ticket
   
   if (!order) {
