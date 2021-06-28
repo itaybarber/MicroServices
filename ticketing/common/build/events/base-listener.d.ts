@@ -1,4 +1,4 @@
-import nats, { Message, Stan } from 'node-nats-streaming';
+import { Message, Stan } from 'node-nats-streaming';
 import { Subjects } from './subjects';
 interface Event {
     subject: Subjects;
@@ -7,11 +7,11 @@ interface Event {
 export declare abstract class Listener<T extends Event> {
     abstract subject: T['subject'];
     abstract queueGroupName: string;
+    abstract onMessage(data: T['data'], msg: Message): void;
     private client;
     protected ackWait: number;
-    abstract onMessage(data: T['data'], msg: nats.Message): void;
     constructor(client: Stan);
-    subscriptionOptions(): nats.SubscriptionOptions;
+    subscriptionOptions(): import("node-nats-streaming").SubscriptionOptions;
     listen(): void;
     parseMessage(msg: Message): any;
 }
