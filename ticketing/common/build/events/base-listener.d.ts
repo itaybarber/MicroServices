@@ -11,7 +11,7 @@ export declare abstract class Listener<T extends Event> {
     protected ackWait: number;
     abstract onMessage(data: T['data'], msg: nats.Message): void;
     constructor(client: Stan);
-    subscriptionOptions(): nats.SubscriptionOptions;
+    subscriptionOptions(): any;
     listen(): void;
     parseMessage(msg: Message): any;
 }
