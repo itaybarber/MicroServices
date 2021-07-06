@@ -7,14 +7,14 @@ interface TicketAttrs {
   userId: string;
 }
 
-// The goal of the TicketDoc interface is, is to list out all the props a doc has / an instance of a ticket has 
+// The goal of the TicketDoc interface is, is to list out all the props a doc / an instance of a ticket has 
 //We need the TicketDoc interface if we would like to add some additional properties in the future
 interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
   userId: string;
   version: number; 
-
+  orderId?: string; // The question mark says it's an optional prop
 }
 
 interface TicketModel extends mongoose.Model<TicketDoc> {
@@ -36,6 +36,10 @@ const ticketSchema = new mongoose.Schema(
     type: String,
     required: true,
   },
+  orderId: {
+    type: String,
+    required: false // Cause when a ticket is created, it won't be associated with any order
+  }
   },
    {
     toJSON: {
