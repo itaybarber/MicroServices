@@ -2,6 +2,7 @@ import { Listener, NotFoundError, OrderCreatedEvent, OrderStatus, Subjects } fro
 import { Message } from "node-nats-streaming";
 import { queueGroupName} from './queue-group-name';
 import { Ticket } from '../../models/ticket';
+import { TicketUpdatedPublisher } from "../publishers/ticket-updated-publisher";
 
 export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   
