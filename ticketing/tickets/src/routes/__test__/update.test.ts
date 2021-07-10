@@ -154,7 +154,7 @@ it('Rejects update is ticket is reserved', async () => {
 
     const ticket = await Ticket.findById(builtTicketRes.body.id);
     ticket!.set({orderId: mongoose.Types.ObjectId().toHexString()});
-    await ticket!.save();
+    await ticket!.save(); 
 
     await request(app)
     .put(`/api/tickets/${builtTicketRes.body.id}`)
@@ -164,4 +164,4 @@ it('Rejects update is ticket is reserved', async () => {
       price: 250} 
     )
     .expect(400);
-})
+}) 
