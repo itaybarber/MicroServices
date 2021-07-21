@@ -7,7 +7,7 @@ import { ExpirationCompleteEvent, OrderStatus} from "@itay_tix/common/build/inde
 import { Message } from 'node-nats-streaming';
 
 const setup = async () => {
-  const listener = new ExpirationCompleteListener(natsWrapper.client).listen();
+  const listener = new ExpirationCompleteListener(natsWrapper.client);
   
   const ticketId = mongoose.Types.ObjectId().toHexString();
 
@@ -40,4 +40,34 @@ const setup = async () => {
   return {data, msg, order, ticket, listener};
 }
 
-it('')
+it('updates the order status to cancelled', async () => {
+  const {data, msg, order, ticket, listener} = await setup();
+
+  await listener.onMessage(data, msg);
+
+  const updatedOrder = await Order.findById(order.id);
+  
+  expect(updatedOrder!.version).toEqual(OrderStatus.Cancelled);
+
+  // expect(updatedOrder?.version).toEqual(order.version + 1);
+});
+
+it('Emitts order cancelled event', async () =>{
+  const {data, msg, order, ticket, listener} = await setup();
+  
+  await listener.onMessage(data, msg);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+
+  const eventData = JSON.parse((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
+
+  expect(eventData.id).toEqual(order.id);
+});
+
+it('acks the message', async () =>{
+  const {data, msg, order, ticket, listener} = await setup();
+  
+  await listener.onMessage(data, msg)
+
+  expect(msg.ack).toHaveBeenCalled();
+})
