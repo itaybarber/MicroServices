@@ -13,7 +13,7 @@ const setup = async () => {
     status: OrderStatus.Created,
     version: 0,
     userId: mongoose.Types.ObjectId().toHexString(),
-    expiresAt: 'askd';
+    expiresAt: 'askd',
     ticket: {
         id: mongoose.Types.ObjectId().toHexString(),
         price: 213
