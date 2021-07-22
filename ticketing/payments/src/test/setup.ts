@@ -41,6 +41,7 @@ afterAll(async () => {
     await mongoose.connection.close();
 });
 
+
 global.signin = () => {
 	// Build a JWT payload. The payload is going to have: {id, email}
 	const payload = {
