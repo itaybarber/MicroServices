@@ -5,11 +5,10 @@ import {
   validateRequest,
   BadRequestError,
   NotFoundError,
-  NotAuthorizedError,
   OrderStatus,
+  NotAuthorizedError,
 } from '@itay_tix/common/build/index';
 import { Order } from '../models/order';
-import { NotAuthorizedError } from '@itay_tix/common';
 
 const router = express.Router();
 
@@ -21,7 +20,7 @@ router.post(
   async (req: Request, res: Response) => {
     const {token, orderId} = req.body;
 
-    const order = Order.findById(orderId);
+    const order = await Order.findById(orderId);
     if (!order) {
       throw new NotFoundError();
     }
@@ -30,7 +29,7 @@ router.post(
       throw new NotAuthorizedError();
     }
 
-    if (order.status === OrderStatus.Cancelled) {
+    if (order.stauts === OrderStatus.Cancelled) {
       throw new BadRequestError('Cannot pay for a cancelled order');
     }
 
