@@ -3,7 +3,7 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import { NotFoundError, errorHandler, currentUser} from '@itay_tix/common/build/index';
-import { CreateChargeRouter } from './routes/new';
+import { createChargeRouter } from './routes/new';
 
 const app = express();
 app.set('trust proxy', true);  // Traffic is being proxied to our app through Ingress Nginx. 
