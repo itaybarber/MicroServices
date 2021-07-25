@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
-export const signin = () => {
+export const signin = (id? :string) => {
 
   // Build a JWT payload. The payload is going to have: {id, email}
   const payload = {
-      id: new mongoose.Types.ObjectId().toHexString(), //fake id
+      id: id || new mongoose.Types.ObjectId().toHexString(), //fake id
       email: 'test@test.org' // fake mail
   }
   // Create the JWT. Via running the JWT signin func in the auth middelware

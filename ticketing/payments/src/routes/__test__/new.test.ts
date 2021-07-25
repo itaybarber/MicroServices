@@ -28,6 +28,8 @@ it('returns a 401 when purchesing an order that does not belong to user', async 
   }
   );
 
+  await order.save();
+
   await request(app)
   .post('/api/payments')
   .set('Cookie', signin())
@@ -39,5 +41,26 @@ it('returns a 401 when purchesing an order that does not belong to user', async 
 }) 
 
 it('returns a 400 when purchesing a cancelled order', async () => {
+  const userId = mongoose.Types.ObjectId().toHexString();
   
-}) 
+  const order = Order.build({
+    id: mongoose.Types.ObjectId().toHexString(),
+    userId: userId,
+    version: 0,
+    price: 20,
+    status: OrderStatus.Cancelled
+  }
+  );
+
+  await order.save();
+
+  await request(app)
+  .post('/api/payments')
+  .set('Cookie', signin(userId))
+  .send({
+    token: '1234',
+    orderId: order.id
+  })
+  .expect(400);
+});
+ 
