@@ -30,6 +30,7 @@ router.post(
       throw new NotAuthorizedError();
     }
 
+    console.log(order.status);
     if (order.status === OrderStatus.Cancelled) {
       throw new BadRequestError('Cannot pay for a cancelled order');
     }
@@ -40,8 +41,8 @@ router.post(
       source: token
     });
 
-    
-    res.send({success:true});
+
+    res.status(201).send({success:true});
   }
 );
 
